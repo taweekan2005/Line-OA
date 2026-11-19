@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPU Canteen Guide — Maison de Saveurs · คลังพิกัดร้านเด็ด ม.ศรีปทุม</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Trirong:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                        serif: ['"Cormorant Garamond"', 'Trirong', 'serif'],
+                        thai: ['Trirong', 'serif'],
+                    },
+                    colors: {
+                        noir: { 900: '#0a0907', 800: '#12100c', 700: '#1a1712', 600: '#24201a' },
+                        gold: { 200: '#f3e6c4', 300: '#e8d5a3', 400: '#d9bc7a', 500: '#c9a45c', 600: '#a8843f', 700: '#7d6230' },
+                        cream: '#f5ecd7',
+                        wine: '#6b1d2a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --gold: #c9a45c;
+            --gold-light: #e8d5a3;
+            --noir: #0a0907;
+        }
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--noir);
+            color: #e9e1cf;
+            overflow-x: hidden;
+        }
+        /* subtle damask-like texture */
+        body::before {
+            content: "";
+            position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(201,164,92,0.10), transparent 55%),
+                radial-gradient(ellipse at 100% 60%, rgba(107,29,42,0.18), transparent 50%),
+                repeating-linear-gradient(45deg, rgba(201,164,92,0.025) 0 2px, transparent 2px 14px);
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0907; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(#a8843f, #e8d5a3); border-radius: 4px; }
+
+        .font-display { font-family: 'Cormorant Garamond', 'Trirong', serif; }
+        .font-thai-serif { font-family: 'Trirong', serif; }
+
+        /* ===== Gold shimmer text ===== */
+        .gold-shimmer {
+            background: linear-gradient(100deg, #a8843f 0%, #f3e6c4 25%, #c9a45c 45%, #fff6dc 55%, #a8843f 75%, #e8d5a3 100%);
+            background-size: 250% auto;
+            -webkit-background-clip: text; background-clip: text;
+            color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+        @keyframes shimmer { to { background-position: 250% center; } }
+
+        /* ===== Letter rise (split text) ===== */
+        .split-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(0.7em) rotate(6deg);
+            filter: blur(6px);
+            animation: charRise 0.8s cubic-bezier(.2,.8,.2,1) forwards;
+        }
+        @keyframes charRise { to { opacity: 1; transform: none; filter: blur(0); } }
+        .wave-char { display: inline-block; animation: wave 2.6s ease-in-out infinite; }
+        @keyframes wave { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+        /* ===== Typewriter ===== */
+        .type-caret { display: inline-block; width: 2px; height: 1em; background: var(--gold); margin-left: 4px; vertical-align: -0.12em; animation: caret 0.9s steps(1) infinite; }
+        @keyframes caret { 50% { opacity: 0; } }
+
+        /* ===== Marquee ===== */
+        .marquee { display: flex; width: max-content; animation: marquee 32s linear infinite; }
+        .marquee-rev { animation-direction: reverse; animation-duration: 40s; }
+        .marquee-wrap:hover .marquee { animation-play-state: paused; }
+        @keyframes marquee { to { transform: translateX(-50%); } }
+
+        /* ===== Ornament divider ===== */
+        .ornament { display: flex; align-items: center; gap: 14px; color: var(--gold); }
+        .ornament::before, .ornament::after { content: ""; height: 1px; flex: 1; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+        /* ===== Cartoon chef ===== */
+        .chef-bob { animation: bob 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+        @keyframes bob { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-1.5deg); } }
+        .chef-eye { animation: blink 4.5s infinite; transform-origin: center; transform-box: fill-box; }
+        @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(0.1); } }
+        .chef-arm { animation: waveArm 1.6s ease-in-out infinite; transform-origin: 18px 10px; transform-box: fill-box; }
+        @keyframes waveArm { 0%,100% { transform: rotate(-8deg); } 50% { transform: rotate(22deg); } }
+        .chef-hat { animation: hatWobble 3.2s ease-in-out infinite; transform-origin: 50% 100%; transform-box: fill-box; }
+        @keyframes hatWobble { 0%,100% { transform: rotate(0); } 25% { transform: rotate(3deg); } 75% { transform: rotate(-3deg); } }
+        .cloche-lid { animation: lidLift 4s ease-in-out infinite; transform-origin: 0% 100%; transform-box: fill-box; }
+        @keyframes lidLift { 0%, 55%, 100% { transform: rotate(0) translateY(0); } 65%, 85% { transform: rotate(-24deg) translateY(-6px); } }
+        .steam { animation: steam 2.4s ease-in-out infinite; opacity: 0; }
+        .steam.s2 { animation-delay: .6s; } .steam.s3 { animation-delay: 1.2s; }
+        @keyframes steam { 0% { opacity: 0; transform: translateY(8px) scaleY(.6); } 40% { opacity: .9; } 100% { opacity: 0; transform: translateY(-26px) scaleY(1.2); } }
+        .cheek { animation: cheek 3s ease-in-out infinite; }
+        @keyframes cheek { 0%,100% { opacity: .55; } 50% { opacity: .9; } }
+
+        /* ===== Kawaii food friends ===== */
+        .float-a { animation: floatA 6s ease-in-out infinite; }
+        .float-b { animation: floatB 7s ease-in-out infinite; }
+        .float-c { animation: floatA 5.5s ease-in-out infinite reverse; }
+        @keyframes floatA { 0%,100% { transform: translate(0,0) rotate(-6deg); } 50% { transform: translate(8px,-18px) rotate(6deg); } }
+        @keyframes floatB { 0%,100% { transform: translate(0,0) rotate(5deg); } 50% { transform: translate(-10px,-14px) rotate(-7deg); } }
+        .bounce-jump { animation: jump 1.8s cubic-bezier(.3,0,.3,1) infinite; transform-origin: 50% 100%; }
+        @keyframes jump { 0%,100% { transform: translateY(0) scale(1.06, .94); } 15% { transform: translateY(0) scale(.95,1.05); } 45% { transform: translateY(-22px) scale(1); } 75% { transform: translateY(0) scale(1.08,.92); } }
+
+        /* Speech bubble */
+        .bubble { animation: bubblePop .5s cubic-bezier(.3,1.6,.5,1) both; }
+        @keyframes bubblePop { from { transform: scale(.4) translateY(10px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+        /* ===== Sparkles ===== */
+        .sparkle { position: absolute; width: 6px; height: 6px; background: var(--gold-light); border-radius: 50%; box-shadow: 0 0 10px 2px rgba(232,213,163,.7); animation: twinkle 3s ease-in-out infinite; }
+        @keyframes twinkle { 0%,100% { opacity: 0; transform: scale(.3); } 50% { opacity: 1; transform: scale(1); } }
+
+        /* ===== Cards ===== */
+        .stall-card {
+            background: linear-gradient(160deg, #1a1712 0%, #12100c 100%);
+            border: 1px solid rgba(201,164,92,0.18);
+            transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s, border-color .5s;
+            opacity: 0; transform: translateY(40px);
+        }
+        .stall-card.in { opacity: 1; transform: translateY(0); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1), box-shadow .5s, border-color .5s; }
+        .stall-card.in:hover {
+            transform: translateY(-8px);
+            border-color: rgba(201,164,92,0.65);
+            box-shadow: 0 30px 50px -20px rgba(0,0,0,.8), 0 0 0 1px rgba(201,164,92,.25), 0 0 40px -10px rgba(201,164,92,.35);
+        }
+        .stall-card::after {
+            content: ""; position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(115deg, transparent 30%, rgba(243,230,196,.12) 50%, transparent 70%);
+            transform: translateX(-120%); transition: transform 1s ease;
+        }
+        .stall-card:hover::after { transform: translateX(120%); }
+        .corner { position: absolute; width: 18px; height: 18px; border-color: rgba(201,164,92,.7); pointer-events: none; z-index: 5; transition: all .4s; }
+        .corner.tl { top: 8px; left: 8px; border-top: 1px solid; border-left: 1px solid; }
+        .corner.br { bottom: 8px; right: 8px; border-bottom: 1px solid; border-right: 1px solid; }
+        .stall-card:hover .corner { width: 30px; height: 30px; }
+
+        /* Reveal sections */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s cubic-bezier(.2,.8,.2,1); }
+        .reveal.in { opacity: 1; transform: none; }
+
+        /* Tabs */
+        .tab-btn { color: #bfb39a; transition: all .3s; }
+        .tab-btn:hover { color: #f3e6c4; }
+        .tab-btn.active { background: linear-gradient(135deg, #e8d5a3, #c9a45c 60%, #a8843f); color: #0a0907; box-shadow: 0 6px 20px -6px rgba(201,164,92,.6); }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f3e6c4, #c9a45c 55%, #a8843f);
+            color: #0a0907; position: relative; overflow: hidden;
+        }
+        .btn-gold::before { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-20deg); animation: sweep 3.5s ease-in-out infinite; }
+        @keyframes sweep { 0%, 60% { left: -60%; } 100% { left: 130%; } }
+
+        /* Preloader */
+        #curtain { transition: opacity .9s ease, visibility .9s; }
+        #curtain.gone { opacity: 0; visibility: hidden; }
+        .curtain-line { animation: lineGrow 1.1s ease forwards; transform: scaleX(0); }
+        @keyframes lineGrow { to { transform: scaleX(1); } }
+
+        /* Chat */
+        #chat-messages::-webkit-scrollbar { width: 5px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            .stall-card, .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative">
+
+    <!-- ===== Intro curtain ===== -->
+    <div id="curtain" class="fixed inset-0 z-[100] bg-noir-900 flex flex-col items-center justify-center">
+        <div class="font-display text-gold-300 tracking-[0.5em] text-xs mb-3 uppercase">Maison de Saveurs</div>
+        <div class="font-display text-5xl sm:text-6xl gold-shimmer font-semibold">SPU</div>
+        <div class="curtain-line h-px w-48 bg-gradient-to-r from-transparent via-gold-500 to-transparent mt-4"></div>
+        <div class="font-thai-serif text-gold-200/70 text-sm mt-3">กำลังจัดโต๊ะให้คุณ...</div>
+    </div>
+
+    <!-- ===== Header ===== -->
+    <header class="sticky top-0 z-50 bg-noir-900/80 backdrop-blur-md border-b border-gold-500/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative z-10">
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-11 h-11 rounded-full border border-gold-500/60 flex items-center justify-center text-gold-400 relative">
+                    <i class="fa-solid fa-utensils group-hover:rotate-[360deg] transition-transform duration-700"></i>
+                    <span class="absolute inset-[-4px] rounded-full border border-gold-500/20"></span>
+                </div>
+                <div class="leading-tight">
+                    <span class="text-[10px] uppercase tracking-[0.35em] text-gold-500/80 block">SPU University</span>
+                    <h1 class="font-display text-xl sm:text-2xl font-semibold text-gold-200 tracking-wide">SPU Canteen <em class="text-gold-400">Guide</em></h1>
+                </div>
+            </a>
+
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <div class="bg-noir-700/80 p-1 rounded-full border border-gold-500/25 flex space-x-1">
+                    <button onclick="filterZone('all')" id="tab-all" class="tab-btn active px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium">ทั้งหมด</button>
+                    <button onclick="filterZone('hot')" id="tab-hot" class="tab-btn px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium">🔥 โรงร้อน</button>
+                    <button onclick="filterZone('cool')" id="tab-cool" class="tab-btn px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium">❄️ โรงเย็น</button>
+                </div>
+                <button onclick="openBotModal()" class="hidden md:flex items-center space-x-2 btn-gold px-5 py-2.5 rounded-full font-semibold text-sm transition-all hover:-translate-y-0.5">
+                    <i class="fa-brands fa-line text-lg"></i>
+                    <span>ถามบอทมื้อเที่ยง</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== Hero ===== -->
+    <section class="relative overflow-hidden py-14 sm:py-20 z-10">
+        <!-- sparkles -->
+        <div id="sparkles" class="absolute inset-0 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Text -->
+                <div class="lg:col-span-6 text-center lg:text-left space-y-6">
+                    <div class="inline-flex items-center space-x-3 text-gold-400 text-[11px] uppercase tracking-[0.35em] reveal">
+                        <span class="w-8 h-px bg-gold-500"></span>
+                        <span>Est. 2026 · Bangkhen</span>
+                        <span class="w-8 h-px bg-gold-500"></span>
+                    </div>
+
+                    <h2 class="font-thai-serif text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.25] text-cream">
+                        <span class="split block" data-delay="200">หิวมื้อเที่ยง?</span>
+                        <span class="split block gold-shimmer" data-delay="700">เชิญรับประสบการณ์</span>
+                        <span class="split block font-display italic text-gold-300 text-3xl sm:text-4xl lg:text-5xl mt-2" data-delay="1300">20 Signature Stalls</span>
+                    </h2>
+
+                    <p class="font-thai-serif text-lg sm:text-xl text-gold-200/90 h-8 reveal">
+                        วันนี้ลอง <span id="typewriter" class="text-gold-400 font-semibold"></span><span class="type-caret"></span>
+                    </p>
+
+                    <p class="text-[#bfb39a] text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0 reveal">
+                        คัดสรรร้านอาหารระดับท็อปของ ม.ศรีปทุม ทั้ง <span class="text-rose-300 font-medium">โรงร้อน</span> และ <span class="text-sky-300 font-medium">โรงเย็น</span>
+                        รสชาติเหนือระดับในราคานักศึกษา พร้อมผู้ช่วย LINE OA Bot คอยแนะนำเมนูและพิกัดให้คุณทันที
+                    </p>
+
+                    <div class="pt-2 flex flex-wrap justify-center lg:justify-start gap-4 reveal">
+                        <a href="#inventory-section" class="btn-gold font-semibold px-8 py-3.5 rounded-full shadow-lg shadow-gold-500/20 transition-all hover:-translate-y-0.5 flex items-center space-x-2">
+                            <i class="fa-solid fa-book-open"></i>
+                            <span>เปิดเมนูร้านเด็ด</span>
+                        </a>
+                        <button onclick="openBotModal()" class="border border-gold-500/50 text-gold-300 hover:bg-gold-500/10 font-medium px-7 py-3.5 rounded-full transition-all flex items-center space-x-2">
+                            <i class="fa-brands fa-line"></i>
+                            <span>ให้บอทแนะนำ</span>
+                        </button>
+                    </div>
+
+                    <div class="flex justify-center lg:justify-start gap-8 pt-4 reveal">
+                        <div><div class="font-display text-3xl text-gold-300 counter" data-to="20">0</div><div class="text-[11px] uppercase tracking-widest text-[#8f8572]">ร้านคัดสรร</div></div>
+                        <div class="w-px bg-gold-500/30"></div>
+                        <div><div class="font-display text-3xl text-gold-300 counter" data-to="2">0</div><div class="text-[11px] uppercase tracking-widest text-[#8f8572]">โซนบริการ</div></div>
+                        <div class="w-px bg-gold-500/30"></div>
+                        <div><div class="font-display text-3xl text-gold-300"><span class="counter" data-to="10">0</span>h</div><div class="text-[11px] uppercase tracking-widest text-[#8f8572]">เปิดทุกวัน</div></div>
+                    </div>
+                </div>
+
+                <!-- Visual: framed photo + cartoon chef -->
+                <div class="lg:col-span-6 relative reveal">
+                    <div class="relative mx-auto max-w-lg">
+                        <!-- gold frame photo -->
+                        <div class="relative rounded-[2rem] overflow-hidden border border-gold-500/40 shadow-2xl shadow-black/60 aspect-[4/3] group">
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80" alt="SPU Canteen Hub" class="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-[1.5s]">
+                            <div class="absolute inset-0 bg-gradient-to-t from-noir-900 via-noir-900/30 to-transparent"></div>
+                            <div class="absolute inset-3 rounded-[1.6rem] border border-gold-300/20 pointer-events-none"></div>
+                            <div class="absolute bottom-0 inset-x-0 p-6 sm:p-7 z-10">
+                                <span class="text-[10px] uppercase tracking-[0.3em] text-gold-400">Official Canteen Hub</span>
+                                <h3 class="font-thai-serif text-cream font-semibold text-xl sm:text-2xl mt-1">โรงอาหาร ม.ศรีปทุม (บางเขน)</h3>
+                                <div class="flex items-center gap-2 text-xs text-[#d8ceb8] mt-1.5">
+                                    <i class="fa-solid fa-circle text-emerald-400 animate-pulse text-[8px]"></i>
+                                    เปิดบริการทุกวัน 07:00 - 17:00 น.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cartoon Chef mascot -->
+                        <div class="absolute -left-6 sm:-left-16 -bottom-10 w-40 sm:w-52 z-20 chef-bob select-none" id="chef">
+                            <!-- speech bubble -->
+                            <div id="chef-bubble" class="bubble absolute -top-6 left-24 sm:left-32 bg-cream text-noir-900 text-xs sm:text-sm font-thai-serif font-semibold px-3.5 py-2 rounded-2xl rounded-bl-none shadow-lg whitespace-nowrap">
+                                Bonjour! หิวยังครับ? 🍽️
+                            </div>
+                            <svg viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg" class="w-full drop-shadow-[0_15px_25px_rgba(0,0,0,.6)]">
+                                <!-- body / jacket -->
+                                <path d="M48 228 Q44 170 70 150 L130 150 Q156 170 152 228 Z" fill="#fbf6ea" stroke="#d9c9a3" stroke-width="2"/>
+                                <circle cx="100" cy="178" r="3.5" fill="#c9a45c"/><circle cx="100" cy="196" r="3.5" fill="#c9a45c"/><circle cx="100" cy="214" r="3.5" fill="#c9a45c"/>
+                                <!-- scarf -->
+                                <path d="M76 150 Q100 166 124 150 L118 162 Q100 172 82 162 Z" fill="#6b1d2a"/>
+                                <!-- waving arm (left side of image) -->
+                                <g class="chef-arm">
+                                    <path d="M62 160 Q36 140 30 112" stroke="#fbf6ea" stroke-width="16" stroke-linecap="round" fill="none"/>
+                                    <circle cx="29" cy="106" r="11" fill="#f6d2b0" stroke="#e3b48c" stroke-width="1.5"/>
+                                </g>
+                                <!-- arm holding cloche -->
+                                <path d="M138 162 Q160 160 168 146" stroke="#fbf6ea" stroke-width="16" stroke-linecap="round" fill="none"/>
+                                <!-- plate + cloche -->
+                                <ellipse cx="172" cy="142" rx="28" ry="5" fill="#d9bc7a" stroke="#a8843f" stroke-width="1.5"/>
+                                <g class="cloche-lid">
+                                    <path d="M148 140 Q148 112 172 112 Q196 112 196 140 Z" fill="#e8d5a3" stroke="#a8843f" stroke-width="1.5"/>
+                                    <path d="M156 132 Q158 120 170 117" stroke="#fff6dc" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>
+                                    <circle cx="172" cy="109" r="4" fill="#c9a45c"/>
+                                </g>
+                                <!-- steam -->
+                                <path class="steam" d="M164 128 q-5 -8 0 -16 q5 -8 0 -16" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <path class="steam s2" d="M174 128 q-5 -8 0 -16 q5 -8 0 -16" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <path class="steam s3" d="M184 128 q-5 -8 0 -16 q5 -8 0 -16" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <!-- head -->
+                                <circle cx="100" cy="112" r="40" fill="#f6d2b0" stroke="#e3b48c" stroke-width="2"/>
+                                <!-- ears -->
+                                <circle cx="60" cy="114" r="7" fill="#f6d2b0" stroke="#e3b48c" stroke-width="2"/>
+                                <circle cx="140" cy="114" r="7" fill="#f6d2b0" stroke="#e3b48c" stroke-width="2"/>
+                                <!-- hat -->
+                                <g class="chef-hat">
+                                    <rect x="68" y="66" width="64" height="16" rx="4" fill="#fbf6ea" stroke="#d9c9a3" stroke-width="2"/>
+                                    <path d="M70 68 Q54 50 70 34 Q78 14 100 22 Q122 14 130 34 Q146 50 130 68 Z" fill="#ffffff" stroke="#d9c9a3" stroke-width="2"/>
+                                    <path d="M88 66 Q86 46 92 32 M112 66 Q114 46 108 32" stroke="#e7dcc0" stroke-width="2" fill="none"/>
+                                    <rect x="68" y="72" width="64" height="4" fill="#c9a45c"/>
+                                </g>
+                                <!-- eyes -->
+                                <g class="chef-eye"><ellipse cx="86" cy="110" rx="5" ry="6.5" fill="#2a1e14"/><circle cx="88" cy="107.5" r="1.8" fill="#fff"/></g>
+                                <g class="chef-eye"><ellipse cx="114" cy="110" rx="5" ry="6.5" fill="#2a1e14"/><circle cx="116" cy="107.5" r="1.8" fill="#fff"/></g>
+                                <!-- brows -->
+                                <path d="M78 98 Q86 94 93 98" stroke="#5a3d25" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <path d="M107 98 Q114 94 122 98" stroke="#5a3d25" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                                <!-- cheeks -->
+                                <ellipse class="cheek" cx="76" cy="124" rx="7" ry="4.5" fill="#f19b9b"/>
+                                <ellipse class="cheek" cx="124" cy="124" rx="7" ry="4.5" fill="#f19b9b"/>
+                                <!-- nose -->
+                                <ellipse cx="100" cy="120" rx="5" ry="4" fill="#eebc96"/>
+                                <!-- mustache -->
+                                <path d="M100 126 Q90 122 82 128 Q76 133 70 128 Q76 138 88 134 Q96 131 100 128 Q104 131 112 134 Q124 138 130 128 Q124 133 118 128 Q110 122 100 126 Z" fill="#5a3d25"/>
+                                <!-- smile -->
+                                <path d="M92 138 Q100 145 108 138" stroke="#8b4a3a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+
+                        <!-- Kawaii onigiri -->
+                        <div class="absolute -top-8 -right-2 sm:-right-8 w-20 sm:w-24 float-a z-20">
+                            <svg viewBox="0 0 100 100"><path d="M50 8 Q60 8 88 70 Q94 88 76 90 L24 90 Q6 88 12 70 Q40 8 50 8 Z" fill="#fffdf6" stroke="#e5dcc6" stroke-width="2"/><rect x="30" y="64" width="40" height="26" rx="3" fill="#1d2b22"/><g class="chef-eye"><circle cx="40" cy="50" r="4" fill="#2a1e14"/></g><g class="chef-eye"><circle cx="60" cy="50" r="4" fill="#2a1e14"/></g><ellipse cx="34" cy="58" rx="5" ry="3" fill="#f6a5a5" opacity=".8"/><ellipse cx="66" cy="58" rx="5" ry="3" fill="#f6a5a5" opacity=".8"/><path d="M45 56 Q50 61 55 56" stroke="#2a1e14" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+                        </div>
+                        <!-- Kawaii dumpling (bao) -->
+                        <div class="absolute top-1/3 -right-4 sm:-right-14 w-16 sm:w-20 float-b z-20">
+                            <svg viewBox="0 0 100 90"><path d="M10 70 Q6 30 50 22 Q94 30 90 70 Q50 84 10 70 Z" fill="#fbf0dc" stroke="#e2cfa8" stroke-width="2"/><path d="M50 22 Q46 12 50 6 Q54 12 50 22 M38 26 Q40 18 44 14 M62 26 Q60 18 56 14" stroke="#e2cfa8" stroke-width="2" fill="none" stroke-linecap="round"/><g class="chef-eye"><path d="M34 50 Q38 45 42 50" stroke="#2a1e14" stroke-width="3" fill="none" stroke-linecap="round"/></g><g class="chef-eye"><path d="M58 50 Q62 45 66 50" stroke="#2a1e14" stroke-width="3" fill="none" stroke-linecap="round"/></g><ellipse cx="30" cy="58" rx="5" ry="3" fill="#f6a5a5" opacity=".8"/><ellipse cx="70" cy="58" rx="5" ry="3" fill="#f6a5a5" opacity=".8"/><ellipse cx="50" cy="60" rx="5" ry="4" fill="#c0504d"/></svg>
+                        </div>
+                        <!-- Kawaii sushi jumping -->
+                        <div class="absolute -bottom-6 right-6 sm:right-10 w-20 sm:w-24 bounce-jump z-20">
+                            <svg viewBox="0 0 100 80"><rect x="14" y="36" width="72" height="36" rx="16" fill="#fffdf6" stroke="#e5dcc6" stroke-width="2"/><path d="M8 38 Q10 18 50 18 Q92 18 92 38 Q90 46 50 44 Q12 46 8 38 Z" fill="#f7956a" stroke="#e57a4c" stroke-width="2"/><path d="M28 24 L36 40 M48 20 L54 42 M68 22 L72 40" stroke="#ffd2bd" stroke-width="3" stroke-linecap="round"/><rect x="44" y="36" width="12" height="36" fill="#1d2b22"/><g class="chef-eye"><circle cx="32" cy="56" r="3.5" fill="#2a1e14"/></g><g class="chef-eye"><circle cx="68" cy="56" r="3.5" fill="#2a1e14"/></g><path d="M26 62 Q28 64 30 62 M70 62 Q72 64 74 62" stroke="#f6a5a5" stroke-width="3" stroke-linecap="round"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== Gold marquee ribbons ===== -->
+    <div class="relative z-10 py-2 space-y-0 -rotate-1">
+        <div class="marquee-wrap overflow-hidden bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 py-3 shadow-lg shadow-black/50">
+            <div class="marquee text-noir-900 font-display text-lg sm:text-xl font-semibold tracking-wide whitespace-nowrap" id="marquee1"></div>
+        </div>
+        <div class="marquee-wrap overflow-hidden bg-noir-800 border-y border-gold-500/30 py-2.5">
+            <div class="marquee marquee-rev text-gold-300/80 font-thai-serif text-sm sm:text-base whitespace-nowrap" id="marquee2"></div>
+        </div>
+    </div>
+
+    <!-- ===== Stalls ===== -->
+    <main id="inventory-section" class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full relative z-10">
+        <div class="text-center mb-10 reveal">
+            <div class="ornament max-w-md mx-auto mb-4"><i class="fa-solid fa-crown text-sm"></i></div>
+            <div class="font-display italic text-gold-400 text-lg">La Carte</div>
+            <h3 class="font-thai-serif text-3xl sm:text-4xl font-semibold text-cream mt-1">
+                <span id="section-title">คลังร้านเด็ดคัดพิเศษ (ทั้งโรงร้อน & โรงเย็น)</span>
+            </h3>
+            <p class="text-[#8f8572] text-sm mt-3">แตะไอคอน LINE ที่มุมขวาล่างของการ์ด เพื่อทักร้านหรือบอทสอบถามข้อมูลได้ทันที</p>
+        </div>
+
+        <div class="flex justify-center mb-10 reveal">
+            <div class="relative w-full max-w-md">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-5 pointer-events-none text-gold-500">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" id="searchInput" oninput="filterStalls()" placeholder="ค้นหาร้าน, เมนูเด็ด, ล็อก..." class="bg-noir-800/80 border border-gold-500/30 text-cream placeholder-[#7a705e] rounded-full pl-12 pr-5 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/60 focus:border-transparent w-full transition">
+            </div>
+        </div>
+
+        <div id="stalls-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7"></div>
+
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="w-24 mx-auto mb-4 bounce-jump">
+                <svg viewBox="0 0 100 90"><path d="M10 70 Q6 30 50 22 Q94 30 90 70 Q50 84 10 70 Z" fill="#fbf0dc" stroke="#e2cfa8" stroke-width="2"/><circle cx="38" cy="50" r="4" fill="#2a1e14"/><circle cx="62" cy="50" r="4" fill="#2a1e14"/><path d="M42 66 Q50 60 58 66" stroke="#2a1e14" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M66 54 q2 6 0 9" stroke="#7cc4f0" stroke-width="3" stroke-linecap="round"/></svg>
+            </div>
+            <h4 class="font-thai-serif text-xl font-semibold text-gold-200">ไม่พบร้านอาหารที่ค้นหา</h4>
+            <p class="text-[#8f8572] text-sm mt-1">ลองเปลี่ยนคำค้นหา หรือเลือกดูโซนอื่นได้เลยครับ</p>
+        </div>
+    </main>
+
+    <!-- ===== Floating bot button with mini mascot ===== -->
+    <div class="fixed bottom-6 right-6 z-40">
+        <button onclick="openBotModal()" class="group relative flex items-center btn-gold p-3 pr-4 rounded-full shadow-2xl shadow-black/60 transition-all duration-300 hover:scale-105">
+            <span class="w-11 h-11 rounded-full bg-noir-900 flex items-center justify-center overflow-hidden border border-gold-300">
+                <svg viewBox="40 20 120 140" class="w-10 h-10 mt-2 bounce-jump"><circle cx="100" cy="112" r="40" fill="#f6d2b0"/><path d="M70 82 Q54 50 70 34 Q78 14 100 22 Q122 14 130 34 Q146 50 130 82 Z" fill="#fff"/><rect x="68" y="72" width="64" height="8" fill="#c9a45c"/><g class="chef-eye"><circle cx="86" cy="110" r="5" fill="#2a1e14"/></g><g class="chef-eye"><circle cx="114" cy="110" r="5" fill="#2a1e14"/></g><path d="M100 126 Q88 120 76 130 Q90 136 100 129 Q110 136 124 130 Q112 120 100 126Z" fill="#5a3d25"/></svg>
+            </span>
+            <span class="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs group-hover:ml-2.5 transition-all duration-300 ease-in-out font-semibold text-sm">ถามบอทมื้อเที่ยง</span>
+            <i class="fa-brands fa-line text-2xl ml-2"></i>
+            <span class="absolute -top-1 -right-1 bg-wine text-gold-200 border border-gold-400 text-[10px] font-bold w-6 h-6 rounded-full flex items-center justify-center animate-bounce">AI</span>
+        </button>
+    </div>
+
+    <!-- ===== Bot modal ===== -->
+    <div id="bot-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-noir-800 rounded-[1.75rem] shadow-2xl max-w-lg w-full overflow-hidden border border-gold-500/40 transform transition-all duration-300 scale-95 opacity-0" id="bot-modal-content">
+            <div class="bg-gradient-to-r from-noir-700 via-noir-600 to-noir-700 border-b border-gold-500/30 px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full bg-noir-900 border border-gold-400 overflow-hidden flex items-center justify-center">
+                        <svg viewBox="40 20 120 140" class="w-11 h-11 mt-2 chef-bob"><circle cx="100" cy="112" r="40" fill="#f6d2b0"/><path d="M70 82 Q54 50 70 34 Q78 14 100 22 Q122 14 130 34 Q146 50 130 82 Z" fill="#fff"/><rect x="68" y="72" width="64" height="8" fill="#c9a45c"/><g class="chef-eye"><circle cx="86" cy="110" r="5" fill="#2a1e14"/></g><g class="chef-eye"><circle cx="114" cy="110" r="5" fill="#2a1e14"/></g><ellipse cx="76" cy="124" rx="6" ry="4" fill="#f19b9b" opacity=".7"/><ellipse cx="124" cy="124" rx="6" ry="4" fill="#f19b9b" opacity=".7"/><path d="M100 126 Q88 120 76 130 Q90 136 100 129 Q110 136 124 130 Q112 120 100 126Z" fill="#5a3d25"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="font-display text-lg font-semibold text-gold-200 flex items-center">
+                            Chef Bot <span class="ml-2 bg-emerald-600/80 text-white text-[10px] px-2 py-0.5 rounded-full uppercase font-sans">Online</span>
+                        </h4>
+                        <p class="text-xs text-[#a99d84]">ผู้ช่วยแนะนำร้านเด็ด ม.ศรีปทุม</p>
+                    </div>
+                </div>
+                <button onclick="closeBotModal()" class="text-gold-400 hover:text-gold-200 text-xl p-1 rounded-lg transition hover:rotate-90 duration-300">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="chat-messages" class="p-4 h-80 overflow-y-auto bg-noir-900/60 space-y-3 text-sm">
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-gold-500 text-noir-900 flex items-center justify-center text-xs flex-shrink-0">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <div class="bg-noir-700 p-3.5 rounded-2xl rounded-tl-none border border-gold-500/20 max-w-[85%] text-[#e9e1cf]">
+                        <p class="font-semibold text-gold-300 mb-1 font-thai-serif">Bienvenue ชาว SPU! 👋</p>
+                        <p>ผมคือ Chef Bot ผู้ช่วยแนะนำเมนูและพิกัดร้านเด็ด วันนี้อยากให้ผมช่วยแนะนำอะไรดีครับ? เลือกหัวข้อด่วนด้านล่างหรือพิมพ์ถามได้เลย</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-4 py-2.5 bg-noir-800 border-t border-gold-500/20 flex flex-wrap gap-1.5">
+                <button onclick="sendQuickPrompt('โรงเย็นมีร้านตามสั่งไหม')" class="border border-gold-500/40 text-gold-300 hover:bg-gold-500/15 text-xs px-3 py-1.5 rounded-full transition">"โรงเย็นมีร้านตามสั่งไหม"</button>
+                <button onclick="sendQuickPrompt('งบ 50 บาทกินอะไรดี')" class="border border-gold-500/40 text-gold-300 hover:bg-gold-500/15 text-xs px-3 py-1.5 rounded-full transition">"งบ 50 บาทกินอะไรดี"</button>
+                <button onclick="sendQuickPrompt('ร้านก๋วยเตี๋ยวโรงร้อนอยู่ตรงไหน')" class="border border-gold-500/40 text-gold-300 hover:bg-gold-500/15 text-xs px-3 py-1.5 rounded-full transition">"ร้านก๋วยเตี๋ยวโรงร้อนอยู่ตรงไหน"</button>
+            </div>
+
+            <div class="p-3 bg-noir-800 border-t border-gold-500/20 flex items-center space-x-2">
+                <input type="text" id="chat-input" onkeypress="handleChatKeypress(event)" placeholder="พิมพ์คำถาม เช่น งบ 40 บาท, ร้านน้ำปั่น..." class="flex-grow bg-noir-900 border border-gold-500/25 text-cream placeholder-[#6f6655] rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold-500/60">
+                <button onclick="sendUserMessage()" class="btn-gold w-11 h-11 rounded-full font-medium text-sm transition flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="bg-noir-900 py-1.5 px-4 text-center text-[10px] text-[#6f6655] border-t border-gold-500/10">
+                นี่คือบอทจำลองบนเว็บ · <a id="real-line-link" href="#" target="_blank" class="text-gold-400 underline hover:text-gold-200">แอด LINE OA ตัวจริงเพื่อคุยกับ Chef Bot</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer class="relative z-10 bg-noir-800 text-[#8f8572] pt-12 pb-8 border-t border-gold-500/25 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="ornament max-w-xs mx-auto mb-6"><span class="font-display italic text-gold-400 text-base">Bon Appétit</span></div>
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-full border border-gold-500/60 flex items-center justify-center text-gold-400 text-xs">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <span class="font-display text-gold-200 font-semibold text-base">SPU Canteen Guide — Sripatum University</span>
+                </div>
+                <p>© 2026 SPU Canteen Project. All rights reserved. Designed for SPU Students.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+         const stallsData = [
+            { id: 1, name: "ครัวคุณแม่ตามสั่ง", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-01 (โซนหน้า)", price: "45 - 60 บาท", hours: "07:30 - 16:00 น.", signature: "กะเพราหมูกรอบไข่ดาว / หมูสับผัดพริกแกง",
+              image: "https://images.unsplash.com/photo-1562967916-eb82221dfb92?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20ขอทราบข้อมูลร้านครัวคุณแม่ตามสั่ง%20ล็อก%20H-01%20หน่อยค่ะ" },
+            { id: 2, name: "เจ๊ B ก๋วยเตี๋ยวเรือต้มยำ", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-04 (กลางโรงร้อน)", price: "40 - 55 บาท", hours: "08:00 - 17:00 น.", signature: "เส้นเล็กต้มยำโบราณ / บะหมี่แห้งทรงเครื่อง",
+              image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20ขอสอบถามเมนูก๋วยเตี๋ยวเรือ%20เจ๊%20B%20ล็อก%20H-04%20ค่ะ" },
+            { id: 3, name: "ข้าวมันไก่ตอน SPU พรีเมียม", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-07 (ใกล้เสาหลัก)", price: "45 - 60 บาท", hours: "07:00 - 15:30 น.", signature: "ข้าวมันไก่ตอนผสม (ไก่ต้ม+ไก่ทอด)",
+              image: "https://img.wongnai.com/p/1920x0/2017/06/22/bbf899f7ab4341dea4aec6330c2afafd.jpg",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สนใจข้าวมันไก่ตอน%20ล็อก%20H-07%20มีไก่หมดหรือยังคะ" },
+            { id: 4, name: "ราดหน้ายอดผักสูตรฮ่องกง", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-10 (โซนด้านใน)", price: "45 - 55 บาท", hours: "09:00 - 16:30 น.", signature: "เส้นใหญ่ราดหน้าหมูหมักนุ่ม / ผัดซีอิ๊ว",
+              image: "https://images.unsplash.com/photo-1617093727343-374698b1b08d?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20ขอสอบถามราดหน้ายอดผัก%20ล็อก%20H-10%20ค่ะ" },
+            { id: 5, name: "ข้าวขาหมูบางเขน", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-12", price: "50 - 70 บาท", hours: "07:30 - 16:00 น.", signature: "คากิพะโล้ / ข้าวขาหมูเนื้อหนังไส้",
+              image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามข้าวขาหมูบางเขน%20ล็อก%20H-12%20ค่ะ" },
+            { id: 6, name: "ส้มตำแซ่บอีสาน SPU", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-15 (มุมยอดฮิต)", price: "40 - 80 บาท", hours: "10:00 - 17:30 น.", signature: "ตำปูปลาร้า / ลาบหมู / คอหมูย่าง",
+              image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgxBrSoTmOSXSxJECR9XvAqf0ivQLzPfAmZ8jLBKX8rc1vo2Yyt7LWOoyU&s=10",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20ขอพิกัดและเมนูส้มตำแซ่บอีสาน%20ล็อก%20H-15%20ค่ะ" },
+            { id: 7, name: "ข้าวแกงปักษ์ใต้คุณยาย", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-18", price: "40 - 60 บาท", hours: "07:00 - 15:00 น.", signature: "คั่วกลิ้งหมูสับ / แกงไตปลา / หมูหวาน",
+              image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามข้าวแกงปักษ์ใต้%20ล็อก%20H-18%20วันนี้มีแกงอะไรบ้างคะ" },
+            { id: 8, name: "สเต็กจานร้อน นักศึกษา", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-20", price: "60 - 90 บาท", hours: "10:30 - 18:00 น.", signature: "สเต็กหมูพริกไทยดำ / สเต็กไก่สไปซี่",
+              image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20ขอจองคิวหรือสอบถามสเต็กจานร้อน%20ล็อก%20H-20%20ค่ะ" },
+            { id: 9, name: "บะหมี่เกี๊ยวหมูแดงโบราณ", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-22", price: "45 - 60 บาท", hours: "07:30 - 16:00 น.", signature: "บะหมี่แห้งหมูแดงย่างถ่าน เกี๊ยวกุ้งแน่นๆ",
+              image: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามบะหมี่เกี๊ยวหมูแดง%20ล็อก%20H-22%20ค่ะ" },
+            { id: 10, name: "ข้าวยำไก่แซ่บ & ของทอด", zone: "hot", zoneName: "โรงร้อน", lock: "ล็อก H-25 (โซนด้านหลัง)", price: "45 - 65 บาท", hours: "08:00 - 16:30 น.", signature: "ข้าวยำไก่แซ่บซี้ด / เฟรนช์ฟรายส์ชีส",
+              image: "https://www.unileverfoodsolutions.co.th/dam/global-ufs/mcos/SEA/calcmenu/recipes/TH-recipes/rice-dishes/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B9%84%E0%B8%81%E0%B9%88%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A/%E0%B8%82%E0%B9%89%E0%B8%B2%E0%B8%A7%E0%B8%A2%E0%B8%B3%E0%B9%84%E0%B8%81%E0%B9%88%E0%B9%81%E0%B8%8B%E0%B9%88%E0%B8%9A_header.jpg",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามข้าวยำไก่แซ่บ%20ล็อก%20H-25%20ค่ะ" },
+
+            // --- โรงเย็น (Cool Zone - 10 Stalls) ---
+            { id: 11, name: "ข้าวซอย & อาหารเหนือลำแต๊", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-02 (โซนแอร์เย็นฉ่ำ)", price: "50 - 70 บาท", hours: "08:00 - 16:30 น.", signature: "ข้าวซอยไก่โบราณ / ขนมจีนน้ำเงี้ยว",
+              image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามข้าวซอยเหนือ%20โรงเย็น%20ล็อก%20C-02%20ค่ะ" },
+            { id: 12, name: "บะหมี่เกี๊ยวหมูแดงฮ่องกง", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-05", price: "45 - 65 บาท", hours: "08:30 - 17:00 น.", signature: "บะหมี่เกี๊ยวกุ้งน้ำใส / หมูแดงย่างถ่าน",
+              image: "https://images.unsplash.com/photo-1525755662778-989d0524087e?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามบะหมี่เกี๊ยวฮ่องกง%20โรงเย็น%20ล็อก%20C-05%20ค่ะ" },
+            { id: 13, name: "ข้าวมันไก่สิงคโปร์", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-08", price: "50 - 65 บาท", hours: "07:30 - 16:00 น.", signature: "ข้าวมันไก่ต้มเนื้อฉ่ำ ซอสซีอิ๊วดำสิงคโปร์",
+              image: "https://thefoodschool.com/wp-content/uploads/2025/07/Web_KhaoManGai1.jpg",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามข้าวมันไก่สิงคโปร์%20โรงเย็น%20ล็อก%20C-08%20ค่ะ" },
+            { id: 14, name: "ยำแซ่บซี๊ด & ยำวุ้นเส้นโบราณ", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-10", price: "50 - 80 บาท", hours: "10:00 - 17:30 น.", signature: "ยำรวมมิตรทะเลเดือด / ยำมาม่าหมูสับ",
+              image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สั่งยำแซ่บซี๊ด%20โรงเย็น%20ล็อก%20C-10%20ล่วงหน้าได้ไหมคะ" },
+            { id: 15, name: "ข้าวหน้าเป็ดพะโล้ & หมูกรอบ", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-13", price: "50 - 75 บาท", hours: "08:00 - 16:00 น.", signature: "ข้าวหน้าเป็ดพะโล้ย่างหนังกรอบ",
+              image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามข้าวหน้าเป็ด%20โรงเย็น%20ล็อก%20C-13%20ค่ะ" },
+            { id: 16, name: "ชาไทย & เบเกอรี่โฮมเมด", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-15 (โซนเครื่องดื่ม)", price: "35 - 55 บาท", hours: "07:30 - 17:00 น.", signature: "ชาไทยวิปชีส / โกโก้หนืด / วอฟเฟิลสด",
+              image: "https://images.unsplash.com/photo-1558857563-b371c33c378e?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สั่งชาไทยวิปชีส%20โรงเย็น%20ล็อก%20C-15%20แก้วหนึ่งค่ะ" },
+            { id: 17, name: "สุกี้จานร้อน / ข้าวหน้าเนื้อ", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-18", price: "50 - 75 บาท", hours: "09:00 - 17:00 น.", signature: "สุกี้แห้งเนื้อนุ่ม / ข้าวหน้าเนื้อไข่ดอง",
+              image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามสุกี้จานร้อน%20โรงเย็น%20ล็อก%20C-18%20ค่ะ" },
+            { id: 18, name: "ผลไม้ปั่น & สมูทตี้เพื่อสุขภาพ", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-20", price: "40 - 60 บาท", hours: "09:30 - 18:00 น.", signature: "มะม่วงปั่นโยเกิร์ต / อะโวคาโดนมสด",
+              image: "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามสมูทตี้ผลไม้%20โรงเย็น%20ล็อก%20C-20%20ค่ะ" },
+            { id: 19, name: "ก๋วยเตี๋ยวหลอด & ปั้นสิบสด", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-22", price: "40 - 55 บาท", hours: "08:00 - 16:00 น.", signature: "ก๋วยเตี๋ยวหลอดทรงเครื่องโบราณ",
+              image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามก๋วยเตี๋ยวหลอด%20โรงเย็น%20ล็อก%20C-22%20ค่ะ" },
+            { id: 20, name: "ซูชิ & ข้าวปั้นญี่ปุ่นเบนโตะ", zone: "cool", zoneName: "โรงเย็น", lock: "ล็อก C-25 (โซนแอร์ด้านในสุด)", price: "10 - 65 บาท", hours: "10:00 - 17:30 น.", signature: "ซูชิหน้าแซลมอน / ข้าวหน้าปลาไหล",
+              image: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=600&q=80",
+              lineUrl: "https://line.me/R/ti/p/@spucanteen?text=สวัสดีค่ะ%20สอบถามซูชิเบนโตะ%20โรงเย็น%20ล็อก%20C-25%20ค่ะ" }
+        ];
+
+        // ===== ตั้งค่า LINE OA จริง =====
+        // เปลี่ยนเป็น Basic ID ของ LINE OA คุณ (ดูได้ใน LINE Official Account Manager เช่น @123abcde)
+        const LINE_OA_ID = '@705fxeis';
+        const LINE_ADD_FRIEND_URL = `https://line.me/R/ti/p/${LINE_OA_ID}`;
+        // แปลงลิงก์ของทุกร้านเป็นแบบ oaMessage → เปิดแชท OA พร้อมข้อความพิมพ์รอไว้ กดส่งแล้วบอทตอบทันที
+        stallsData.forEach(s => {
+            const msg = decodeURIComponent((s.lineUrl.split('?text=')[1] || `ขอทราบข้อมูลร้าน ${s.name} ${s.lock}`));
+            s.lineUrl = `https://line.me/R/oaMessage/${LINE_OA_ID}/?${encodeURIComponent(msg)}`;
+        });
+
+        let currentFilter = 'all';
+
+        // ---------- Helpers ----------
+        // แยกตัวอักษรไทยแบบไม่ให้สระ/วรรณยุกต์หลุด (grapheme clusters)
+        function graphemes(str) {
+            if (window.Intl && Intl.Segmenter) {
+                return [...new Intl.Segmenter('th', { granularity: 'grapheme' }).segment(str)].map(s => s.segment);
+            }
+            return str.match(/[฀-๿][ัิ-ฺ็-๎]*|./gu) || [];
+        }
+
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('in'); cardObserver.unobserve(e.target); }
+            });
+        }, { threshold: 0.12 });
+
+        // ---------- Render ----------
+        function renderStalls(stallsToRender) {
+            const grid = document.getElementById('stalls-grid');
+            const emptyState = document.getElementById('empty-state');
+            grid.innerHTML = '';
+
+            if (stallsToRender.length === 0) { emptyState.classList.remove('hidden'); return; }
+            emptyState.classList.add('hidden');
+
+            stallsToRender.forEach((stall, i) => {
+                const isHot = stall.zone === 'hot';
+                const badge = isHot
+                    ? '<span class="bg-wine/80 text-rose-100 border border-rose-300/30 text-[11px] px-3 py-1 rounded-full font-medium flex items-center gap-1.5 backdrop-blur-md"><i class="fa-solid fa-fire text-rose-300"></i>โรงร้อน</span>'
+                    : '<span class="bg-sky-950/80 text-sky-100 border border-sky-300/30 text-[11px] px-3 py-1 rounded-full font-medium flex items-center gap-1.5 backdrop-blur-md"><i class="fa-solid fa-snowflake text-sky-300"></i>โรงเย็น</span>';
+
+                const card = document.createElement('div');
+                card.className = "stall-card rounded-[1.4rem] overflow-hidden flex flex-col justify-between group relative";
+                card.style.transitionDelay = `${(i % 4) * 90}ms`;
+                card.innerHTML = `
+                    <span class="corner tl"></span><span class="corner br"></span>
+                    <div class="relative overflow-hidden h-48">
+                        <img src="${stall.image}" alt="${stall.name}" loading="lazy" class="w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-[1.2s] ease-out" onerror="this.src='https://placehold.co/400x300/1a1712/c9a45c?text=SPU+Stall'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-noir-800 via-noir-900/10 to-transparent"></div>
+                        <div class="absolute top-3 left-3">${badge}</div>
+                        <div class="absolute bottom-3 right-3 font-display text-gold-200 text-sm px-3 py-1 rounded-full bg-noir-900/80 border border-gold-500/40 backdrop-blur-md">
+                            ฿ ${stall.price.replace(' บาท','')}
+                        </div>
+                        <div class="absolute top-3 right-3 text-[10px] font-display text-gold-300/80 tracking-widest">N° ${String(stall.id).padStart(2,'0')}</div>
+                    </div>
+
+                    <div class="p-5 flex-grow flex flex-col justify-between space-y-4 relative">
+                        <div>
+                            <div class="text-[11px] tracking-wider text-gold-500/90 mb-1.5 flex items-center">
+                                <i class="fa-solid fa-location-dot mr-1.5"></i> ${stall.lock}
+                            </div>
+                            <h4 class="font-thai-serif text-lg font-semibold text-cream group-hover:text-gold-300 transition-colors line-clamp-1">${stall.name}</h4>
+                        </div>
+
+                        <div class="border-y border-dashed border-gold-500/20 py-3 space-y-1.5 text-xs">
+                            <div class="flex items-start text-[#d8ceb8]">
+                                <i class="fa-solid fa-star w-5 text-gold-500 flex-shrink-0 mt-0.5 text-[10px]"></i>
+                                <span class="italic line-clamp-2">${stall.signature}</span>
+                            </div>
+                            <div class="flex items-center text-[#8f8572]">
+                                <i class="fa-regular fa-clock w-5 text-gold-600 flex-shrink-0"></i>
+                                <span>${stall.hours}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <span class="font-display italic text-gold-400/80 text-sm">Réserver via LINE</span>
+                            <a href="${stall.lineUrl}" target="_blank"
+                               class="w-11 h-11 rounded-full border border-gold-500/50 text-gold-300 hover:text-noir-900 hover:bg-gradient-to-br hover:from-gold-200 hover:to-gold-500 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:rotate-12"
+                               title="แอด LINE OA ร้านนี้พร้อมข้อความทักอัตโนมัติ">
+                                <i class="fa-brands fa-line text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                cardObserver.observe(card);
+            });
+        }
+
+        function filterZone(zone) {
+            currentFilter = zone;
+            ['all', 'hot', 'cool'].forEach(z => {
+                document.getElementById(`tab-${z}`).classList.toggle('active', z === zone);
+            });
+            const titleElem = document.getElementById('section-title');
+            if (zone === 'all') titleElem.textContent = "คลังร้านเด็ดคัดพิเศษ (ทั้งโรงร้อน & โรงเย็น รวม 20 ร้าน)";
+            else if (zone === 'hot') titleElem.textContent = "คลังร้านเด็ด 'โรงร้อน' คัดพิเศษ (10 ร้านดัง)";
+            else titleElem.textContent = "คลังร้านเด็ด 'โรงเย็น' คัดพิเศษ (10 ร้านดัง)";
+            filterStalls();
+        }
+
+        function filterStalls() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            let baseList = stallsData;
+            if (currentFilter !== 'all') baseList = stallsData.filter(s => s.zone === currentFilter);
+            renderStalls(baseList.filter(s =>
+                s.name.toLowerCase().includes(query) ||
+                s.signature.toLowerCase().includes(query) ||
+                s.lock.toLowerCase().includes(query)
+            ));
+        }
+
+        // ---------- Bot ----------
+        function openBotModal() {
+            const modal = document.getElementById('bot-modal');
+            const content = document.getElementById('bot-modal-content');
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            setTimeout(() => { content.classList.remove('scale-95', 'opacity-0'); content.classList.add('scale-100', 'opacity-100'); }, 10);
+        }
+        function closeBotModal() {
+            const modal = document.getElementById('bot-modal');
+            const content = document.getElementById('bot-modal-content');
+            content.classList.remove('scale-100', 'opacity-100'); content.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 250);
+        }
+        document.getElementById('bot-modal').addEventListener('click', e => { if (e.target.id === 'bot-modal') closeBotModal(); });
+
+        function sendQuickPrompt(text) { document.getElementById('chat-input').value = text; sendUserMessage(); }
+        function handleChatKeypress(e) { if (e.key === 'Enter') sendUserMessage(); }
+
+        function sendUserMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+            const chatMessages = document.getElementById('chat-messages');
+
+            const userMsgDiv = document.createElement('div');
+            userMsgDiv.className = "flex items-start justify-end space-x-2 bubble";
+            userMsgDiv.innerHTML = `
+                <div class="bg-gradient-to-br from-gold-300 to-gold-500 text-noir-900 p-3.5 rounded-2xl rounded-tr-none max-w-[85%]"><p>${escapeHtml(text)}</p></div>
+                <div class="w-8 h-8 rounded-full bg-noir-600 border border-gold-500/40 text-gold-300 flex items-center justify-center text-xs flex-shrink-0"><i class="fa-solid fa-user"></i></div>`;
+            chatMessages.appendChild(userMsgDiv);
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // typing indicator
+            const typing = document.createElement('div');
+            typing.className = "flex items-center space-x-2 text-gold-400 pl-10";
+            typing.innerHTML = '<span class="wave-char">●</span><span class="wave-char" style="animation-delay:.15s">●</span><span class="wave-char" style="animation-delay:.3s">●</span>';
+            chatMessages.appendChild(typing);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            setTimeout(() => {
+                typing.remove();
+                let reply = "รับทราบครับ! สำหรับคำถามนี้ ที่โรงอาหาร SPU มีร้านเด็ดรองรับครบ เลือกดูจากเมนูหน้าเว็บ หรือกดแอด LINE OA ของแต่ละร้านได้เลยครับ";
+                const lower = text.toLowerCase();
+                if (lower.includes('โรงเย็น') && lower.includes('ตามสั่ง')) {
+                    reply = "❄️ ที่ **โรงเย็น** มีร้านอาหารจานเดียวและร้านทางเลือกแอร์ฉ่ำเพียบ! เช่น *ข้าวซอย & อาหารเหนือลำแต๊*, *บะหมี่เกี๊ยวฮ่องกง* อยู่ในช่วงล็อก C-02 ถึง C-10 ครับ";
+                } else if (lower.includes('งบ 50') || lower.includes('50 บาท')) {
+                    reply = "💵 งบ 50 บาทอิ่มอร่อยแน่นอนครับ แนะนำ:\n• ครัวคุณแม่ตามสั่ง (โรงร้อน ล็อก H-01) ข้าวกะเพรา 45-50 บาท\n• เจ๊ B ก๋วยเตี๋ยวเรือ 40-50 บาท\n• หรือข้าวแกงปักษ์ใต้คุณยายครับ!";
+                } else if (lower.includes('ก๋วยเตี๋ยว') || lower.includes('โรงร้อน')) {
+                    reply = "🔥 ร้านก๋วยเตี๋ยวใน **โรงร้อน** ยอดฮิตคือ เจ๊ B ก๋วยเตี๋ยวเรือต้มยำ อยู่ที่ ล็อก H-04 เปิด 08:00 - 17:00 น. น้ำซุปเข้มข้นจัดจ้าน!";
+                } else if (lower.includes('น้ำปั่น') || lower.includes('เครื่องดื่ม')) {
+                    reply = "🥤 โซนเครื่องดื่มแนะนำ ชาไทย & เบเกอรี่โฮมเมด (ล็อก C-15 โรงเย็น) ชาไทยวิปชีสแก้วละ 45 บาท ฟินมากครับ!";
+                }
+                appendBotMessage(reply);
+            }, 900);
+        }
+
+        function appendBotMessage(text) {
+            const html = escapeHtml(text)
+                .replace(/\*\*(.+?)\*\*/g, '<strong class="text-gold-300">$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em class="text-gold-200">$1</em>');
+            const chatMessages = document.getElementById('chat-messages');
+            const botMsgDiv = document.createElement('div');
+            botMsgDiv.className = "flex items-start space-x-2 bubble";
+            botMsgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-gold-500 text-noir-900 flex items-center justify-center text-xs flex-shrink-0"><i class="fa-solid fa-utensils"></i></div>
+                <div class="bg-noir-700 p-3.5 rounded-2xl rounded-tl-none border border-gold-500/20 max-w-[85%] text-[#e9e1cf] whitespace-pre-line"><p>${html}</p></div>`;
+            chatMessages.appendChild(botMsgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(string) {
+            return string.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // ---------- Animations ----------
+        function splitText() {
+            document.querySelectorAll('.split').forEach(el => {
+                const base = parseInt(el.dataset.delay || 0, 10);
+                const chars = graphemes(el.textContent.trim());
+                el.textContent = '';
+                const isShimmer = el.classList.contains('gold-shimmer');
+                chars.forEach((ch, i) => {
+                    const span = document.createElement('span');
+                    span.className = 'split-char' + (isShimmer ? ' gold-shimmer' : '');
+                    span.textContent = ch === ' ' ? ' ' : ch;
+                    span.style.animationDelay = `${base + 900 + i * 45}ms`;
+                    el.appendChild(span);
+                });
+                if (isShimmer) el.classList.remove('gold-shimmer');
+            });
+        }
+
+        function typewriter() {
+            const el = document.getElementById('typewriter');
+            const words = ['ข้าวมันไก่ตอนพรีเมียม', 'ก๋วยเตี๋ยวเรือต้มยำ', 'สเต็กจานร้อน', 'ข้าวซอยไก่โบราณ', 'ซูชิหน้าแซลมอน', 'ชาไทยวิปชีส'];
+            let w = 0, i = 0, deleting = false;
+            function tick() {
+                const chars = graphemes(words[w]);
+                if (!deleting) {
+                    i++; el.textContent = chars.slice(0, i).join('');
+                    if (i === chars.length) { deleting = true; return setTimeout(tick, 1600); }
+                } else {
+                    i--; el.textContent = chars.slice(0, i).join('');
+                    if (i === 0) { deleting = false; w = (w + 1) % words.length; }
+                }
+                setTimeout(tick, deleting ? 45 : 95);
+            }
+            setTimeout(tick, 1800);
+        }
+
+        function buildMarquee() {
+            const m1 = ['Fine Dining Experience', '20 ร้านคัดสรร', 'Haute Cuisine Étudiante', 'โรงร้อน · โรงเย็น', 'Saveurs de Bangkhen', 'อร่อยระดับมิชลินในราคานักศึกษา'];
+            const m2 = ['กะเพราหมูกรอบ', 'ก๋วยเตี๋ยวเรือ', 'ข้าวมันไก่ตอน', 'ราดหน้ายอดผัก', 'ข้าวขาหมู', 'ส้มตำปูปลาร้า', 'คั่วกลิ้ง', 'สเต็กพริกไทยดำ', 'ข้าวซอย', 'ซูชิแซลมอน', 'ชาไทยวิปชีส', 'สมูทตี้มะม่วง'];
+            const row = (arr, sep) => arr.map(t => `<span class="px-6">${t}</span><span class="opacity-70">${sep}</span>`).join('');
+            document.getElementById('marquee1').innerHTML = row(m1, '✦').repeat(2);
+            document.getElementById('marquee2').innerHTML = row(m2, '·').repeat(2);
+        }
+
+        function sparkles() {
+            const wrap = document.getElementById('sparkles');
+            for (let i = 0; i < 28; i++) {
+                const s = document.createElement('span');
+                s.className = 'sparkle';
+                s.style.left = Math.random() * 100 + '%';
+                s.style.top = Math.random() * 100 + '%';
+                s.style.animationDelay = (Math.random() * 3) + 's';
+                s.style.animationDuration = (2 + Math.random() * 3) + 's';
+                const size = 2 + Math.random() * 4;
+                s.style.width = s.style.height = size + 'px';
+                wrap.appendChild(s);
+            }
+        }
+
+        function chefTalk() {
+            const lines = ['Bonjour! หิวยังครับ? 🍽️', 'วันนี้มีเมนูพิเศษนะ ✨', 'ลองข้าวมันไก่ตอนสิครับ 🍗', 'อยากได้คำแนะนำ? กดถามผมเลย!', 'Bon appétit! 🥂'];
+            const bubble = document.getElementById('chef-bubble');
+            let idx = 0;
+            setInterval(() => {
+                idx = (idx + 1) % lines.length;
+                bubble.classList.remove('bubble'); void bubble.offsetWidth;
+                bubble.textContent = lines[idx];
+                bubble.classList.add('bubble');
+            }, 3500);
+            document.getElementById('chef').addEventListener('click', openBotModal);
+            document.getElementById('chef').style.cursor = 'pointer';
+        }
+
+        function counters() {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (!e.isIntersecting) return;
+                    const el = e.target, to = +el.dataset.to; let n = 0;
+                    const step = () => { n++; el.textContent = n; if (n < to) setTimeout(step, 1200 / to); };
+                    step(); obs.unobserve(el);
+                });
+            });
+            document.querySelectorAll('.counter').forEach(c => obs.observe(c));
+        }
+
+        function revealSections() {
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+            }, { threshold: 0.15 });
+            document.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i < 6 ? i * 120 + 300 : 0) + 'ms'; obs.observe(el); });
+        }
+
+        window.onload = function() {
+            setTimeout(() => document.getElementById('curtain').classList.add('gone'), 1000);
+            splitText();
+            typewriter();
+            buildMarquee();
+            sparkles();
+            chefTalk();
+            counters();
+            revealSections();
+            document.getElementById('real-line-link').href = LINE_ADD_FRIEND_URL;
+            renderStalls(stallsData);
+        };
+    </script>
+</body>
+</html>
